@@ -18,18 +18,34 @@ app.use((req, res, next) => {
 });
 
 // Database logic
-// We'll use a function to connect, helpful for serverless cold starts if we move logic inside handler
+// We'll use a function to connect, helpful for serverless cold starts
 const connectDB = async () => {
-    if (mongoose.connection.readyState >= 1) return;
+    if (mongoose.connection.readyState >= 1) {
+        console.log('MongoDB already connected');
+        return;
+    }
     try {
-        await mongoose.connect(process.env.MONGO_URI);
+        await mongoose.connect(process.env.MONGO_URI, {
+            serverSelectionTimeoutMS: 5000,
+            socketTimeoutMS: 45000,
+        });
         console.log('MongoDB Connected');
     } catch (err) {
         console.error('MongoDB Connect Error:', err);
+        throw err;
     }
 };
 
-connectDB();
+// Middleware to ensure DB connection before handling requests
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        console.error('Database connection failed:', error);
+        res.status(500).json({ message: 'Database connection failed', error: error.message });
+    }
+});
 
 // Routes
 app.get('/', (req, res) => res.send('CryptoFlux API Ready'));
