@@ -3,7 +3,7 @@
 CryptoFlux is a production-ready MERN stack cryptocurrency tracking and analytics platform that provides real-time market data, advanced charts, secure authentication, and personalized portfolio management — all deployed live on Vercel.
 
 🌐 Live Demo:
-👉 https://cryptoflux-psi.vercel.app
+👉 https://cryptoflux-cf.vercel.app/
 
 📌 Features
 
@@ -148,8 +148,6 @@ Fully production-ready with SPA routing support
 Portfolio Profit & Loss (P&L)
 
 Price alerts & notifications
-
-Dark / Light mode
 
 Exchange comparison
 
