@@ -115,7 +115,7 @@ MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 
 Frontend (Vercel)
-VITE_API_URL=https://crypto-flux-mu.vercel.app/api
+VITE_API_URL=your_backend_deployed_vercel_url
 VITE_CG_API_KEY=your_coingecko_api_key
 
 🚀 Local Development
