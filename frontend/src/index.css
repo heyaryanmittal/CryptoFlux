@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary-DEFAULT: #4F46E5;
+  --color-primary-hover: #4338CA;
+  --color-dark-DEFAULT: #0f172a;
+  --color-dark-card: #1e293b;
+}
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 dark:bg-black dark:text-white min-h-screen font-sans antialiased transition-colors duration-300;
+    margin: 0;
+  }
+}
+
+@utility glass {
+  @apply bg-white/60 dark:bg-white/10 backdrop-blur-lg border border-black/5 dark:border-white/20;
+}
