@@ -56,20 +56,46 @@ export const AuthProvider = ({ children }) => {
     };
 
     const updateWatchlist = async (coinId) => {
+        // Store previous state for potential rollback
+        const previousWatchlist = user?.watchlist || [];
+
         try {
             console.log('Updating watchlist for coin:', coinId);
-            console.log('Current watchlist before update:', user?.watchlist);
+            console.log('Current watchlist before update:', previousWatchlist);
+
+            // OPTIMISTIC UPDATE - Update UI immediately for instant feedback
+            const isCurrentlyInWatchlist = previousWatchlist.includes(coinId);
+            const optimisticWatchlist = isCurrentlyInWatchlist
+                ? previousWatchlist.filter(id => id !== coinId)
+                : [...previousWatchlist, coinId];
+
+            // Update UI immediately
+            setUser(prev => ({
+                ...prev,
+                watchlist: optimisticWatchlist
+            }));
+
+            // Then sync with backend
             const res = await axios.post(`${API_URL}/user/watchlist`, { coinId });
             console.log('Backend returned watchlist:', res.data);
-            // The backend returns the updated watchlist array
+
+            // Update with server response (in case of any discrepancies)
             setUser(prev => {
                 const updated = { ...prev, watchlist: res.data };
-                console.log('Updated user state:', updated);
+                console.log('Final synced user state:', updated);
                 return updated;
             });
+
             return res.data;
         } catch (error) {
             console.error("Failed to update watchlist", error);
+
+            // ROLLBACK - Revert to previous state on error
+            setUser(prev => ({
+                ...prev,
+                watchlist: previousWatchlist
+            }));
+
             throw error;
         }
     };

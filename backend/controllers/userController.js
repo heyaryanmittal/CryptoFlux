@@ -13,25 +13,25 @@ exports.updateWatchlist = async (req, res) => {
     try {
         const { coinId } = req.body;
         console.log(`[Watchlist Update] User: ${req.user.id}, Coin: ${coinId}`);
-        const user = await User.findById(req.user.id);
 
-        // Handle add/remove toggle behavior or specific add/remove
-        // Assuming toggle for simplicity if not specified, 
-        // but robust API might separate add/remove. 
-        // Prompt says "Star icon -> add/remove".
-        if (user.watchlist.includes(coinId)) {
-            user.watchlist = user.watchlist.filter(id => id !== coinId);
-            console.log(`[Watchlist Update] Removed ${coinId}. New watchlist:`, user.watchlist);
-        } else {
-            user.watchlist.push(coinId);
-            console.log(`[Watchlist Update] Added ${coinId}. New watchlist:`, user.watchlist);
-        }
-        await user.save();
-        console.log(`[Watchlist Update] Returning watchlist:`, user.watchlist);
-        res.json(user.watchlist);
+        // First check if coin is in watchlist
+        const user = await User.findById(req.user.id).select('watchlist').lean();
+        const isInWatchlist = user.watchlist.includes(coinId);
+
+        // Use atomic operation for instant update
+        const updatedUser = await User.findByIdAndUpdate(
+            req.user.id,
+            isInWatchlist
+                ? { $pull: { watchlist: coinId } }  // Remove if exists
+                : { $addToSet: { watchlist: coinId } }, // Add if doesn't exist (prevents duplicates)
+            { new: true, select: 'watchlist' } // Return updated document with only watchlist field
+        );
+
+        console.log(`[Watchlist Update] ${isInWatchlist ? 'Removed' : 'Added'} ${coinId}. New watchlist:`, updatedUser.watchlist);
+        res.json(updatedUser.watchlist);
     } catch (err) {
         console.error('[Watchlist Update] Error:', err);
-        res.status(500).send('Server Error');
+        res.status(500).json({ message: 'Server Error', error: err.message });
     }
 };
 
