@@ -110,32 +110,33 @@ npm run dev
 Run Frontend
 cd frontend
 npm run dev
+```
+## 🌍 Deployment
 
-🌍 Deployment
+- Backend deployed as a **serverless Express API** on Vercel
+- Frontend deployed as a **Vite + React SPA** on Vercel
+- Frontend and backend deployed as **separate Vercel projects**
+- Fully production-ready with **SPA routing support**
 
-Backend deployed as a serverless Express API on Vercel
+---
 
-Frontend deployed as a Vite + React SPA on Vercel
+## 📈 Future Enhancements
 
-Frontend and backend deployed as separate Vercel projects
+- Portfolio Profit & Loss (P&L)
+- Price alerts & notifications
+- Exchange comparison
+- OAuth authentication (Google / GitHub)
 
-Fully production-ready with SPA routing support
+---
 
-📈 Future Enhancements
+## 👨‍💻 Author
 
-Portfolio Profit & Loss (P&L)
-
-Price alerts & notifications
-
-Exchange comparison
-
-OAuth authentication (Google / GitHub)
-
-👨‍💻 Author
-
-Aryan Mittal
+**Aryan Mittal**  
 GitHub: https://github.com/heyaryanmittal
 
-⭐ Support
+---
+
+## ⭐ Support
 
 If you find this project useful, please consider giving it a ⭐ on GitHub — it really helps and motivates further development.
+
