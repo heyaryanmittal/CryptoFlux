@@ -1,165 +1,153 @@
-🚀 CryptoFlux
+# 🚀 CryptoFlux – Cryptocurrency Portfolio & Market Analytics Platform
 
-CryptoFlux is a production-ready MERN stack cryptocurrency tracking and analytics platform that provides real-time market data, advanced charts, secure authentication, and personalized portfolio management — all deployed live on Vercel.
+CryptoFlux is a production-ready MERN stack cryptocurrency tracking and analytics platform that delivers real-time market insights, interactive charts, secure authentication, and personalized portfolio & watchlist management — fully deployed on Vercel.
 
-🌐 Live Demo:
-👉 https://cryptoflux-psi.vercel.app
+🌐 Live Demo: https://cryptoflux-cf.vercel.app/
 
-📌 Features
+---
 
-🔐 Authentication
+## 📌 Overview
 
-Secure signup & login using JWT
+CryptoFlux helps users track cryptocurrencies, analyze market trends, manage watchlists, and maintain a personal crypto portfolio through a fast, responsive, and secure single-page application (SPA).
 
-Password hashing with bcrypt
+Designed with scalability and real-world usage in mind, CryptoFlux uses a modern React frontend, a secure Express backend, MongoDB persistence, and cloud-native deployment.
 
-Protected routes
+---
 
-Logout with session cleanup
+## ✨ Features
 
-📊 Cryptocurrency Market Data
+### 🔐 Authentication & Security
+- Secure user signup & login using JWT
+- Password hashing with bcrypt
+- Protected routes with token validation
+- Logout with session cleanup
+- Environment-based secrets management
 
-Real-time prices using CoinGecko API
+### 📊 Cryptocurrency Market Data
+- Real-time prices via CoinGecko API
+- Instant cryptocurrency search
+- Grid & list view toggle
+- Detailed coin pages with live price trends
+- 24-hour high / low indicators
+- Interactive charts using Chart.js
+- External resources & related links
 
-Search for any cryptocurrency
+### ⭐ Watchlist
+- Add or remove cryptocurrencies with one click
+- Persistent watchlist stored in MongoDB
+- Quick access from dashboard
 
-Grid & list view toggle
+### 💼 Portfolio Management
+- Add purchased cryptocurrencies
+- Track quantity owned per coin
+- Secure portfolio storage per user
+- Clean portfolio summary dashboard
 
-Detailed coin pages with:
+### 👤 User Profile
+- View personal details (name & email)
+- Watchlist and portfolio overview
+- Terms & Conditions modal
 
-Price trends
+### 🎨 UI & UX
+- Modern investor-focused design
+- Fully responsive layout
+- Clean color palette: White, Black, Green, Gold
+- Smooth SPA routing with refresh support
 
-High / Low
+---
 
-Interactive charts (Chart.js)
+## 🛠 Tech Stack
 
-Related news & external links
+### Frontend
+- React (Vite)
+- React Router DOM
+- Axios
+- Chart.js
+- Tailwind CSS / Modern CSS
 
-⭐ Watchlist
+### Backend
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- JWT Authentication
+- bcrypt
 
-Add/remove coins using star icon
+### Deployment & Infrastructure
+- Vercel (Frontend & Backend)
+- MongoDB Atlas
+- Secure environment variables
 
-Persistent watchlist stored in MongoDB
+---
 
-Quick access from dashboard
+## 📂 Project Structure
 
-💼 Portfolio
-
-Add purchased coins
-
-Set quantity owned
-
-Portfolio data saved securely
-
-Portfolio summary on dashboard
-
-👤 Profile
-
-View name & email
-
-Watchlist & portfolio overview
-
-Terms & Conditions modal
-
-🎨 UI & UX
-
-Modern investor-focused design
-
-Responsive layout
-
-Theme colors: White, Black, Green & Gold
-
-SPA routing with refresh support
-
-🛠 Tech Stack
-Frontend
-
-React (Vite)
-
-React Router DOM
-
-Axios
-
-Chart.js
-
-Tailwind CSS / Modern CSS
-
-Backend
-
-Node.js
-
-Express.js
-
-MongoDB (Mongoose)
-
-JWT Authentication
-
-bcrypt
-
-Deployment
-
-Vercel (Frontend & Backend)
-
-MongoDB Atlas
-
-Environment variables for security
-
-📂 Project Structure
+```bash
 CryptoFlux/
 ├── frontend/   # React + Vite client
 └── backend/    # Express + MongoDB API
+```
 
 ⚙️ Environment Variables
-Backend (Vercel)
+Backend (.env)
+```bash
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
+```
 
-Frontend (Vercel)
-VITE_API_URL=your_backend_deployed_vercel_url
+Frontend (.env)
+```bash
+VITE_API_URL=your_backend_vercel_url
 VITE_CG_API_KEY=your_coingecko_api_key
+```
 
-🚀 Local Development
-1️⃣ Clone Repository
+🚀 Clone the Repository
+```bash
 git clone https://github.com/heyaryanmittal/CryptoFlux.git
 cd CryptoFlux
+```
 
-2️⃣ Run Backend
+Install Dependencies
+```bash
+npm install --prefix backend
+npm install --prefix frontend
+```
+
+Run Backend
+```bash
 cd backend
-npm install
 npm run dev
+```
 
-3️⃣ Run Frontend
+Run Frontend
+```bash
 cd frontend
-npm install
 npm run dev
+```
+## 🌍 Deployment
 
-🌍 Deployment
+- Backend deployed as a **serverless Express API** on Vercel
+- Frontend deployed as a **Vite + React SPA** on Vercel
+- Frontend and backend deployed as **separate Vercel projects**
+- Fully production-ready with **SPA routing support**
 
-Backend deployed as serverless Express API on Vercel
+---
 
-Frontend deployed as Vite React app on Vercel
+## 📈 Future Enhancements
 
-Frontend and backend deployed as separate Vercel projects
+- Portfolio Profit & Loss (P&L)
+- Price alerts & notifications
+- Exchange comparison
+- OAuth authentication (Google / GitHub)
 
-Fully production-ready with SPA routing support
+---
 
-📈 Future Enhancements
+## 👨‍💻 Author
 
-Portfolio Profit & Loss (P&L)
-
-Price alerts & notifications
-
-Dark / Light mode
-
-Exchange comparison
-
-OAuth login (Google/GitHub)
-
-👨‍💻 Author
-
-Aryan Mittal
+**Aryan Mittal**  
 GitHub: https://github.com/heyaryanmittal
 
-⭐ Support
+---
 
-If you like this project, consider giving it a star ⭐ on GitHub — it really helps!
+## ⭐ Support
+
+If you find this project useful, please consider giving it a ⭐ on GitHub — it really helps and motivates further development.
