@@ -85,10 +85,14 @@ Designed with scalability and real-world usage in mind, CryptoFlux uses a modern
 CryptoFlux/
 ├── frontend/   # React + Vite client
 └── backend/    # Express + MongoDB API
-⚙️ Environment Variables
+```
+
+##⚙️ Environment Variables
 Backend (.env)
+```bash
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
+```
 
 Frontend (.env)
 VITE_API_URL=your_backend_vercel_url
