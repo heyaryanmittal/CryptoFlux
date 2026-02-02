@@ -87,7 +87,7 @@ CryptoFlux/
 └── backend/    # Express + MongoDB API
 ```
 
-##⚙️ Environment Variables
+⚙️ Environment Variables
 Backend (.env)
 ```bash
 MONGO_URI=your_mongodb_connection_string
@@ -95,23 +95,31 @@ JWT_SECRET=your_jwt_secret
 ```
 
 Frontend (.env)
+```bash
 VITE_API_URL=your_backend_vercel_url
 VITE_CG_API_KEY=your_coingecko_api_key
+```
 
-🚀 Local Development
-Clone the Repository
+🚀 Clone the Repository
+```bash
 git clone https://github.com/heyaryanmittal/CryptoFlux.git
 cd CryptoFlux
+```
 
 Install Dependencies
+```bash
 npm install --prefix backend
 npm install --prefix frontend
+```
 
 Run Backend
+```bash
 cd backend
 npm run dev
+```
 
 Run Frontend
+```bash
 cd frontend
 npm run dev
 ```
@@ -143,4 +151,3 @@ GitHub: https://github.com/heyaryanmittal
 ## ⭐ Support
 
 If you find this project useful, please consider giving it a ⭐ on GitHub — it really helps and motivates further development.
-
