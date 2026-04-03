@@ -1,8 +1,8 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import coingecko from '../utils/coingecko';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Search, Grid, List, TrendingUp, TrendingDown, Star, RefreshCw, AlertCircle } from 'lucide-react';
+import { Search, Grid, List, TrendingUp, TrendingDown, Star, RefreshCw, AlertCircle, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Dashboard = () => {
@@ -69,12 +69,75 @@ const Dashboard = () => {
         return '$' + num.toLocaleString();
     };
 
-    const filteredCoins = useMemo(() => {
-        return coins.filter(coin =>
-            coin.name.toLowerCase().includes(search.toLowerCase()) ||
-            coin.symbol.toLowerCase().includes(search.toLowerCase())
-        );
-    }, [coins, search]);
+    const [searchResults, setSearchResults] = useState(null); // null = not searching, array = search results
+    const [searchLoading, setSearchLoading] = useState(false);
+    const searchTimerRef = useRef(null);
+
+    // Global search via CoinGecko /search API
+    const performGlobalSearch = useCallback(async (query) => {
+        if (query.length < 2) {
+            setSearchResults(null);
+            setSearchLoading(false);
+            return;
+        }
+
+        setSearchLoading(true);
+        try {
+            const searchRes = await coingecko.get(`/search?query=${query}`);
+            const matchedCoins = searchRes.data.coins.slice(0, 20);
+
+            if (matchedCoins.length === 0) {
+                setSearchResults([]);
+                setSearchLoading(false);
+                return;
+            }
+
+            const ids = matchedCoins.map(c => c.id).join(',');
+            const marketRes = await coingecko.get('/coins/markets', {
+                params: {
+                    vs_currency: 'usd',
+                    ids: ids,
+                    order: 'market_cap_desc',
+                    sparkline: false
+                }
+            });
+            setSearchResults(marketRes.data);
+        } catch (err) {
+            console.error('Search error:', err);
+            setSearchResults([]);
+        } finally {
+            setSearchLoading(false);
+        }
+    }, []);
+
+    const handleSearchChange = (e) => {
+        const query = e.target.value;
+        setSearch(query);
+
+        if (searchTimerRef.current) clearTimeout(searchTimerRef.current);
+
+        if (query.length < 2) {
+            setSearchResults(null);
+            setSearchLoading(false);
+            return;
+        }
+
+        setSearchLoading(true);
+        searchTimerRef.current = setTimeout(() => {
+            performGlobalSearch(query);
+        }, 500);
+    };
+
+    const clearSearch = () => {
+        setSearch('');
+        setSearchResults(null);
+        setSearchLoading(false);
+        if (searchTimerRef.current) clearTimeout(searchTimerRef.current);
+    };
+
+    const isSearching = search.length >= 2;
+    const displayCoins = isSearching ? (searchResults || []) : coins;
+    const isLoading = isSearching ? searchLoading : loading;
 
     const SkeletonCard = () => (
         <div className="glass rounded-2xl p-6 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 animate-pulse">
@@ -158,11 +221,16 @@ const Dashboard = () => {
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-green-500 transition-colors" size={20} />
                         <input
                             type="text"
-                            placeholder="Search cryptocurrencies..."
-                            className="w-full bg-white border border-gray-200 dark:bg-white/5 dark:border-white/10 rounded-xl pl-12 pr-4 py-2.5 sm:py-3 focus:border-green-500 focus:outline-none transition-all placeholder-gray-500 dark:placeholder-gray-600 text-sm sm:text-base"
+                            placeholder="Search any cryptocurrency globally..."
+                            className="w-full bg-white border border-gray-200 dark:bg-white/5 dark:border-white/10 rounded-xl pl-12 pr-10 py-2.5 sm:py-3 focus:border-green-500 focus:outline-none transition-all placeholder-gray-500 dark:placeholder-gray-600 text-sm sm:text-base"
                             value={search}
-                            onChange={(e) => setSearch(e.target.value)}
+                            onChange={handleSearchChange}
                         />
+                        {search && (
+                            <button onClick={clearSearch} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors">
+                                <X size={18} />
+                            </button>
+                        )}
                     </div>
 
                     <div className="flex bg-white border border-gray-200 dark:bg-white/5 dark:border-white/10 rounded-xl p-1 shadow-sm">
@@ -181,13 +249,20 @@ const Dashboard = () => {
                     </div>
                 </div>
 
+                {/* Search results indicator */}
+                {isSearching && !isLoading && searchResults && (
+                    <div className="mb-6 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                        <span className="font-medium text-green-500">{searchResults.length}</span> results for "<span className="font-medium text-gray-900 dark:text-white">{search}</span>"
+                    </div>
+                )}
+
                 {/* Content Area */}
                 <AnimatePresence mode="wait">
-                    {loading ? (
+                    {isLoading ? (
                         <div key="loader" className={view === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6' : 'flex flex-col gap-3'}>
-                            {[...Array(PAGE_SIZE)].map((_, i) => view === 'grid' ? <SkeletonCard key={i} /> : <SkeletonRow key={i} />)}
+                            {[...Array(isSearching ? 8 : PAGE_SIZE)].map((_, i) => view === 'grid' ? <SkeletonCard key={i} /> : <SkeletonRow key={i} />)}
                         </div>
-                    ) : error ? (
+                    ) : error && !isSearching ? (
                         <motion.div 
                             key="error"
                             initial={{ opacity: 0, scale: 0.95 }}
@@ -206,9 +281,21 @@ const Dashboard = () => {
                                 <RefreshCw size={18} /> Retry Connection
                             </button>
                         </motion.div>
+                    ) : displayCoins.length === 0 && isSearching ? (
+                        <motion.div
+                            key="no-results"
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="text-center py-20 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 max-w-lg mx-auto"
+                        >
+                            <Search size={48} className="mx-auto mb-4 text-gray-300 dark:text-gray-700" />
+                            <h2 className="text-xl font-bold mb-2">No results found</h2>
+                            <p className="text-gray-500 dark:text-gray-400 text-sm">No cryptocurrency matches "<span className="text-green-500 font-medium">{search}</span>"</p>
+                            <button onClick={clearSearch} className="mt-6 px-6 py-2 bg-green-500 text-black font-bold rounded-xl hover:bg-green-400 transition-all text-sm">Clear Search</button>
+                        </motion.div>
                     ) : (
-                        <motion.div 
-                            key={view + page}
+                        <motion.div
+                            key={isSearching ? 'search-' + search : view + page}
                             variants={container}
                             initial="hidden"
                             animate="show"
@@ -226,7 +313,7 @@ const Dashboard = () => {
                                 </div>
                             )}
 
-                            {filteredCoins.map(coin => (
+                            {displayCoins.map(coin => (
                                 <motion.div 
                                     variants={item}
                                     key={coin.id}
@@ -301,7 +388,8 @@ const Dashboard = () => {
                     )}
                 </AnimatePresence>
 
-                {/* Pagination */}
+                {/* Pagination — hidden during search */}
+                {!isSearching && (
                 <div className="flex justify-center items-center mt-12 gap-6">
                     <motion.button
                         whileHover={{ x: -2 }}
@@ -328,6 +416,7 @@ const Dashboard = () => {
                         Next
                     </motion.button>
                 </div>
+                )}
             </div>
         </div>
     );
