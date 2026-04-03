@@ -100,23 +100,17 @@ const Landing = () => {
                             desc="Deep dive into market trends with professional-grade charting tools."
                             delay={0.3}
                         />
-                    </div>
-                </section>
-
-                {/* Additional Features */}
-                <section className="container mx-auto px-6 py-16">
-                    <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                        <SmallFeature
-                            icon={<BarChart3 size={20} className="text-green-600 dark:text-green-400" />}
+                        <FeatureCard
+                            icon={<BarChart3 className="text-green-600 dark:text-green-400" size={28} />}
                             title="Portfolio Tracking"
                             desc="Monitor your entire crypto portfolio in one dashboard with profit/loss analysis."
-                            delay={0.1}
+                            delay={0.4}
                         />
-                        <SmallFeature
-                            icon={<Globe size={20} className="text-blue-600 dark:text-blue-400" />}
+                        <FeatureCard
+                            icon={<Globe className="text-blue-600 dark:text-blue-400" size={28} />}
                             title="Global Exchanges"
                             desc="Compare trading volumes and prices across 200+ exchanges worldwide."
-                            delay={0.2}
+                            delay={0.5}
                         />
                     </div>
                 </section>
@@ -224,22 +218,6 @@ const FeatureCard = ({ icon, title, desc, delay }) => (
         <div className="mb-5 p-3.5 bg-gray-100 dark:bg-white/5 rounded-xl w-fit group-hover:scale-110 group-hover:bg-gray-200 dark:group-hover:bg-white/10 transition-all duration-300">{icon}</div>
         <h3 className="text-xl font-bold mb-2 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">{title}</h3>
         <p className="text-gray-500 dark:text-gray-400 leading-relaxed">{desc}</p>
-    </motion.div>
-);
-
-const SmallFeature = ({ icon, title, desc, delay }) => (
-    <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay }}
-        className="flex items-start gap-4 p-6 rounded-2xl border border-gray-200 dark:border-white/10 bg-white/60 dark:bg-white/[0.02] backdrop-blur-sm hover:border-green-500/20 transition-all duration-300"
-    >
-        <div className="p-2.5 bg-gray-100 dark:bg-white/5 rounded-xl shrink-0">{icon}</div>
-        <div>
-            <h4 className="font-bold mb-1">{title}</h4>
-            <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{desc}</p>
-        </div>
     </motion.div>
 );
 
