@@ -120,7 +120,7 @@ const Dashboard = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-white pb-20 transition-colors duration-300">
-            <div className="container mx-auto px-6 pt-32">
+            <div className="container mx-auto px-4 sm:px-6 pt-20 sm:pt-32">
 
                 {/* Welcome & Stats */}
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
@@ -128,7 +128,7 @@ const Dashboard = () => {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                     >
-                        <h1 className="text-4xl font-bold mb-2">Welcome, <span className="bg-gradient-to-r from-green-500 to-yellow-500 dark:from-green-400 dark:to-yellow-400 bg-clip-text text-transparent">{user?.name}</span></h1>
+                        <h1 className="text-2xl sm:text-4xl font-bold mb-2">Welcome, <span className="bg-gradient-to-r from-green-500 to-yellow-500 dark:from-green-400 dark:to-yellow-400 bg-clip-text text-transparent">{user?.name}</span></h1>
                         <p className="text-gray-500 dark:text-gray-400">Track and analyze market movements in real-time.</p>
                     </motion.div>
 
@@ -159,7 +159,7 @@ const Dashboard = () => {
                         <input
                             type="text"
                             placeholder="Search cryptocurrencies..."
-                            className="w-full bg-white border border-gray-200 dark:bg-white/5 dark:border-white/10 rounded-xl pl-12 pr-4 py-3 focus:border-green-500 focus:outline-none transition-all placeholder-gray-500 dark:placeholder-gray-600"
+                            className="w-full bg-white border border-gray-200 dark:bg-white/5 dark:border-white/10 rounded-xl pl-12 pr-4 py-2.5 sm:py-3 focus:border-green-500 focus:outline-none transition-all placeholder-gray-500 dark:placeholder-gray-600 text-sm sm:text-base"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />

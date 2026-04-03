@@ -12,15 +12,15 @@ const Landing = () => {
                 <div className="absolute top-[30%] right-[10%] w-[30%] h-[30%] bg-yellow-500/5 rounded-full blur-[120px]" />
             </div>
 
-            <main className="relative z-10 flex-1">
+            <main className="relative z-10 flex-1 overflow-x-hidden">
                 {/* Hero Section */}
-                <section className="container mx-auto px-6 pt-24 pb-16 flex flex-col items-center text-center">
+                <section className="container mx-auto px-4 sm:px-6 pt-20 sm:pt-24 pb-12 sm:pb-16 flex flex-col items-center text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
                     >
-                        <h1 className="text-5xl md:text-8xl font-black mb-6 tracking-tight leading-[1.1]">
+                        <h1 className="text-4xl sm:text-5xl md:text-8xl font-black mb-4 sm:mb-6 tracking-tight leading-[1.1]">
                             Crypto<span className="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-green-400">Flux</span>
                         </h1>
                     </motion.div>
@@ -29,7 +29,7 @@ const Landing = () => {
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.2 }}
-                        className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mb-10 leading-relaxed"
+                        className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mb-8 sm:mb-10 leading-relaxed px-2 sm:px-0"
                     >
                         Experience the future of cryptocurrency tracking. <br className="hidden md:block" />
                         Real-time data, advanced analytics, and a seamless interface designed for the modern investor.
@@ -41,11 +41,11 @@ const Landing = () => {
                         transition={{ duration: 0.5, delay: 0.35 }}
                         className="flex flex-col sm:flex-row items-center gap-4"
                     >
-                        <Link to="/auth?mode=signup" className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-green-500 to-green-400 text-white dark:text-black font-bold text-lg rounded-full hover:shadow-[0_0_40px_rgba(74,222,128,0.4)] transition-all duration-300 transform hover:-translate-y-0.5">
+                        <Link to="/auth?mode=signup" className="group relative inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-green-500 to-green-400 text-white dark:text-black font-bold text-base sm:text-lg rounded-full hover:shadow-[0_0_40px_rgba(74,222,128,0.4)] transition-all duration-300 transform hover:-translate-y-0.5">
                             Get Started Free
                             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                         </Link>
-                        <Link to="/auth" className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-gray-300 dark:border-white/20 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300 font-medium text-lg">
+                        <Link to="/auth" className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 rounded-full border border-gray-300 dark:border-white/20 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300 font-medium text-base sm:text-lg">
                             Sign In
                         </Link>
                     </motion.div>
@@ -55,7 +55,7 @@ const Landing = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.5 }}
-                        className="flex flex-wrap justify-center gap-8 md:gap-16 mt-16 py-8 border-t border-b border-gray-200 dark:border-white/10 w-full max-w-3xl"
+                        className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 md:gap-16 mt-12 sm:mt-16 py-6 sm:py-8 border-t border-b border-gray-200 dark:border-white/10 w-full max-w-3xl"
                     >
                         <StatItem value="150+" label="Cryptocurrencies" />
                         <StatItem value="50+" label="Exchanges" />
@@ -65,7 +65,7 @@ const Landing = () => {
                 </section>
 
                 {/* Feature Cards */}
-                <section className="container mx-auto px-6 py-16">
+                <section className="container mx-auto px-4 sm:px-6 py-10 sm:py-16">
                     <motion.div
                         initial={{ opacity: 0, y: 15 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -81,7 +81,7 @@ const Landing = () => {
                         </p>
                     </motion.div>
 
-                    <div className="grid md:grid-cols-3 gap-6 w-full max-w-5xl mx-auto">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 w-full max-w-5xl mx-auto">
                         <FeatureCard
                             icon={<Activity className="text-green-600 dark:text-green-400" size={28} />}
                             title="Real-Time Data"
@@ -122,19 +122,19 @@ const Landing = () => {
                 </section>
 
                 {/* CTA Section */}
-                <section className="container mx-auto px-6 py-16">
+                <section className="container mx-auto px-4 sm:px-6 py-10 sm:py-16">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
-                        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 dark:from-white/[0.06] dark:via-white/[0.03] dark:to-white/[0.06] p-12 md:p-16 text-center max-w-4xl mx-auto border border-gray-800 dark:border-white/10"
+                        className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 dark:from-white/[0.06] dark:via-white/[0.03] dark:to-white/[0.06] p-8 sm:p-12 md:p-16 text-center max-w-4xl mx-auto border border-gray-800 dark:border-white/10"
                     >
                         {/* Glow effects */}
                         <div className="absolute top-0 left-1/4 w-64 h-64 bg-green-500/20 rounded-full blur-[100px] pointer-events-none" />
                         <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-purple-500/15 rounded-full blur-[80px] pointer-events-none" />
 
-                        <h2 className="relative text-3xl md:text-4xl font-bold mb-4 text-white dark:text-white">Ready to start tracking?</h2>
+                        <h2 className="relative text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-white dark:text-white">Ready to start tracking?</h2>
                         <p className="relative text-gray-400 text-lg mb-8 max-w-xl mx-auto">
                             Join thousands of traders who trust CryptoFlux for their daily market analysis.
                         </p>
@@ -148,7 +148,7 @@ const Landing = () => {
 
             {/* Footer */}
             <footer className="relative z-10 border-t border-gray-200 dark:border-white/10 bg-white/40 dark:bg-white/[0.02] backdrop-blur-sm transition-colors duration-300">
-                <div className="container mx-auto px-6 py-10">
+                <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-10">
                     <div className="flex flex-col md:flex-row justify-between items-start gap-8">
                         {/* Brand */}
                         <div className="flex flex-col gap-3">
@@ -162,7 +162,7 @@ const Landing = () => {
                         </div>
 
                         {/* Links */}
-                        <div className="flex gap-16">
+                        <div className="flex gap-10 sm:gap-16">
                             <div>
                                 <h4 className="font-semibold text-sm mb-3 text-gray-800 dark:text-gray-300">Product</h4>
                                 <ul className="space-y-2 text-sm text-gray-500 dark:text-gray-500">

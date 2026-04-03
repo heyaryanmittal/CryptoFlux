@@ -98,14 +98,14 @@ const CoinDetails = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-white pb-20 transition-colors duration-300">
-            <div className="container mx-auto px-6 pt-32">
+            <div className="container mx-auto px-4 sm:px-6 pt-20 sm:pt-32">
                 <motion.button 
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     onClick={() => navigate(-1)} 
-                    className="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white mb-8 transition-colors group px-4 py-2 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-full w-fit hover:border-green-500/50"
+                    className="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white mb-6 sm:mb-8 transition-colors group px-3 sm:px-4 py-2 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-full w-fit hover:border-green-500/50"
                 >
-                    <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" /> Back to Dashboard
+                    <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" /> <span className="hidden sm:inline">Back to Dashboard</span><span className="sm:hidden">Back</span>
                 </motion.button>
 
                 <div className="grid lg:grid-cols-3 gap-8">
@@ -116,17 +116,17 @@ const CoinDetails = () => {
                     >
                         {/* Header Section */}
                         <div className="flex justify-between items-start">
-                            <div className="flex items-center gap-6">
-                                <div className="relative">
+                            <div className="flex items-center gap-3 sm:gap-6">
+                                <div className="relative shrink-0">
                                     <div className="absolute inset-0 bg-green-500/20 blur-2xl rounded-full" />
-                                    <img src={coin.image.large} alt={coin.name} className="w-20 h-20 rounded-full shadow-2xl relative z-10 p-1 bg-white dark:bg-black border-2 border-green-500/20" />
+                                    <img src={coin.image.large} alt={coin.name} className="w-14 h-14 sm:w-20 sm:h-20 rounded-full shadow-2xl relative z-10 p-1 bg-white dark:bg-black border-2 border-green-500/20" />
                                 </div>
                                 <div>
-                                    <div className="flex items-center gap-3">
-                                        <h1 className="text-5xl font-extrabold tracking-tight">{coin.name}</h1>
-                                        <span className="bg-gray-200 dark:bg-white/10 px-3 py-1 rounded-lg text-sm font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400">Rank #{coin.market_cap_rank}</span>
+                                    <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                                        <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">{coin.name}</h1>
+                                        <span className="bg-gray-200 dark:bg-white/10 px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400">Rank #{coin.market_cap_rank}</span>
                                     </div>
-                                    <span className="text-xl text-gray-500 dark:text-gray-400 uppercase font-bold tracking-[0.2em]">{coin.symbol}</span>
+                                    <span className="text-base sm:text-xl text-gray-500 dark:text-gray-400 uppercase font-bold tracking-[0.2em]">{coin.symbol}</span>
                                 </div>
                             </div>
                             
@@ -145,14 +145,14 @@ const CoinDetails = () => {
                         </div>
 
                         {/* Financial Snapshot */}
-                        <div className="glass p-8 rounded-[2.5rem] bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 overflow-hidden relative group">
+                        <div className="glass p-5 sm:p-8 rounded-2xl sm:rounded-[2.5rem] bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 overflow-hidden relative group">
                             <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 transition-all duration-700 group-hover:bg-green-500/20" />
                             <div className="relative z-10 flex flex-col md:flex-row md:items-end gap-6 md:justify-between">
                                 <div>
                                     <div className="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-widest mb-2 flex items-center gap-2">
                                         <DollarSign size={14} /> Global Market Value
                                     </div>
-                                    <div className="text-6xl font-mono font-bold tracking-tighter text-gray-900 dark:text-white">
+                                    <div className="text-4xl sm:text-5xl md:text-6xl font-mono font-bold tracking-tighter text-gray-900 dark:text-white break-all sm:break-normal">
                                         ${coin.market_data.current_price.usd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 })}
                                     </div>
                                 </div>
@@ -165,7 +165,7 @@ const CoinDetails = () => {
                         </div>
 
                         {/* Chart Component */}
-                        <div className="glass p-8 rounded-[2.5rem] border border-gray-200 dark:border-white/10 relative overflow-hidden bg-white dark:bg-white/5">
+                        <div className="glass p-5 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-gray-200 dark:border-white/10 relative overflow-hidden bg-white dark:bg-white/5">
                             <div className="flex justify-between items-center mb-10">
                                 <h3 className="text-2xl font-bold flex items-center gap-3">
                                     <Activity className="text-green-500" /> Historical Performance
@@ -174,7 +174,7 @@ const CoinDetails = () => {
                                     <span className="px-3 py-1 rounded-full bg-green-500/10 text-green-500 text-xs font-bold">30 Days Analysis</span>
                                 </div>
                             </div>
-                            <div className="relative h-[400px]">
+                            <div className="relative h-[280px] sm:h-[400px]">
                                 <CoinChart history={chartData} />
                             </div>
                         </div>

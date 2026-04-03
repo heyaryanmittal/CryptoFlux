@@ -8,17 +8,17 @@ const Profile = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-white pb-20 selection:bg-green-500 selection:text-black transition-colors duration-300">
-            <div className="container mx-auto px-6 pt-32 max-w-4xl">
-                <h1 className="text-4xl font-bold mb-8">My Profile</h1>
+            <div className="container mx-auto px-4 sm:px-6 pt-20 sm:pt-32 max-w-4xl">
+                <h1 className="text-2xl sm:text-4xl font-bold mb-8">My Profile</h1>
 
-                <div className="glass p-10 rounded-3xl border border-gray-200 dark:border-white/10 flex flex-col md:flex-row items-center gap-10 mb-8 relative overflow-hidden bg-white dark:bg-white/5">
+                <div className="glass p-6 sm:p-10 rounded-2xl sm:rounded-3xl border border-gray-200 dark:border-white/10 flex flex-col md:flex-row items-center gap-6 sm:gap-10 mb-8 relative overflow-hidden bg-white dark:bg-white/5">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
 
-                    <div className="relative z-10 w-32 h-32 rounded-full bg-gradient-to-br from-green-500 to-yellow-500 flex items-center justify-center text-6xl font-bold text-black shadow-2xl flex-shrink-0">
+                    <div className="relative z-10 w-20 h-20 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-green-500 to-yellow-500 flex items-center justify-center text-3xl sm:text-6xl font-bold text-black shadow-2xl flex-shrink-0">
                         {user?.name?.charAt(0).toUpperCase()}
                     </div>
                     <div className="relative z-10 text-center md:text-left flex-1">
-                        <h2 className="text-3xl font-bold mb-2">{user?.name}</h2>
+                        <h2 className="text-xl sm:text-3xl font-bold mb-2">{user?.name}</h2>
                         <p className="text-gray-500 dark:text-gray-400 text-lg mb-6">{user?.email}</p>
                         <div className="flex gap-4 justify-center md:justify-start">
                             <div className="px-6 py-3 bg-gray-100 dark:bg-white/5 rounded-2xl border border-gray-200 dark:border-white/10 flex flex-col items-center md:items-start min-w-[120px]">

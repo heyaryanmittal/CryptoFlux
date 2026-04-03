@@ -10,9 +10,13 @@
 }
 
 @layer base {
+  html {
+    overflow-x: hidden;
+  }
   body {
     @apply bg-gray-50 text-gray-900 dark:bg-black dark:text-white min-h-screen font-sans antialiased transition-colors duration-300;
     margin: 0;
+    overflow-x: hidden;
   }
 }
 

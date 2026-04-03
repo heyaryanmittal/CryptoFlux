@@ -66,7 +66,7 @@ const Watchlist = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-white pb-20 transition-colors duration-300">
-            <div className="container mx-auto px-6 pt-32">
+            <div className="container mx-auto px-4 sm:px-6 pt-20 sm:pt-32">
                 <div className="flex items-center gap-4 mb-12">
                     <motion.button 
                         whileHover={{ scale: 1.1 }}
@@ -79,7 +79,7 @@ const Watchlist = () => {
                     <motion.h1 
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="text-4xl font-bold"
+                        className="text-2xl sm:text-4xl font-bold"
                     >
                         My Watchlist
                     </motion.h1>

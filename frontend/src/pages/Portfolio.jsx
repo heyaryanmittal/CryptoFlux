@@ -125,7 +125,7 @@ const Portfolio = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-white pb-20 transition-colors duration-300">
-            <div className="container mx-auto px-6 pt-32">
+            <div className="container mx-auto px-4 sm:px-6 pt-20 sm:pt-32">
                 <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
                     <motion.div 
                         initial={{ opacity: 0, x: -20 }}
@@ -135,7 +135,7 @@ const Portfolio = () => {
                         <button onClick={() => navigate(-1)} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">
                             <ArrowLeft size={24} />
                         </button>
-                        <h1 className="text-4xl font-bold">My Portfolio</h1>
+                        <h1 className="text-2xl sm:text-4xl font-bold">My Portfolio</h1>
                     </motion.div>
                     <motion.button
                         initial={{ opacity: 0, x: 20 }}
@@ -153,7 +153,7 @@ const Portfolio = () => {
                 <motion.div 
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="glass p-10 rounded-3xl border border-gray-200 dark:border-white/10 mb-12 bg-gradient-to-br from-green-500/10 to-transparent relative overflow-hidden"
+                    className="glass p-6 sm:p-10 rounded-2xl sm:rounded-3xl border border-gray-200 dark:border-white/10 mb-8 sm:mb-12 bg-gradient-to-br from-green-500/10 to-transparent relative overflow-hidden"
                 >
                     <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
                     <div className="relative z-10">
@@ -164,7 +164,7 @@ const Portfolio = () => {
                             key={getTotalValue()}
                             initial={{ opacity: 0.5 }}
                             animate={{ opacity: 1 }}
-                            className="text-5xl md:text-6xl font-mono font-bold tracking-tight text-gray-900 dark:text-white"
+                            className="text-3xl sm:text-5xl md:text-6xl font-mono font-bold tracking-tight text-gray-900 dark:text-white break-all sm:break-normal"
                         >
                             ${getTotalValue().toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </motion.div>

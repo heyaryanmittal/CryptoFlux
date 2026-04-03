@@ -51,7 +51,7 @@ const Exchanges = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-white pb-20 transition-colors duration-300">
-            <div className="container mx-auto px-6 pt-32">
+            <div className="container mx-auto px-4 sm:px-6 pt-20 sm:pt-32">
                 <motion.div 
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -62,7 +62,7 @@ const Exchanges = () => {
                             <ArrowLeftRight size={32} />
                         </div>
                         <div>
-                            <h1 className="text-4xl font-extrabold tracking-tight">Top Exchanges</h1>
+                            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight">Top Exchanges</h1>
                             <p className="text-gray-500 dark:text-gray-400 font-medium tracking-wide">Market leaders by liquidity and user trust</p>
                         </div>
                     </div>
@@ -117,21 +117,21 @@ const Exchanges = () => {
                                     key={ex.id} 
                                     variants={itemVariants}
                                     whileHover={{ x: 8 }}
-                                    className="glass p-6 rounded-[2rem] bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-green-500/50 hover:shadow-xl hover:shadow-green-500/5 transition-all flex flex-col md:grid md:grid-cols-12 items-center gap-6 group relative"
+                                    className="glass p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-green-500/50 hover:shadow-xl hover:shadow-green-500/5 transition-all flex flex-col sm:grid sm:grid-cols-12 items-start sm:items-center gap-4 sm:gap-6 group relative"
                                 >
                                     <div className="absolute top-0 left-0 w-1 h-full bg-green-500 rounded-l-full scale-y-0 group-hover:scale-y-100 transition-transform origin-top duration-500" />
                                     
-                                    <div className="col-span-1 text-2xl font-black text-gray-300 dark:text-gray-700 w-full text-center tabular-nums">
+                                    <div className="hidden sm:block col-span-1 text-2xl font-black text-gray-300 dark:text-gray-700 w-full text-center tabular-nums">
                                         {ex.trust_score_rank || '-'}
                                     </div>
                                     
-                                    <div className="col-span-11 md:col-span-5 flex items-center gap-6 w-full pl-0 md:pl-4">
+                                    <div className="col-span-11 sm:col-span-5 flex items-center gap-4 sm:gap-6 w-full pl-0">
                                         <div className="relative">
                                             <div className="absolute inset-0 bg-green-500/10 blur-xl group-hover:bg-green-500/20 transition-all" />
-                                            <img src={ex.image} alt={ex.name} className="w-14 h-14 rounded-2xl shadow-lg relative z-10 p-1 bg-white dark:bg-black border border-gray-100 dark:border-white/10" />
+                                            <img src={ex.image} alt={ex.name} className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl shadow-lg relative z-10 p-0.5 sm:p-1 bg-white dark:bg-black border border-gray-100 dark:border-white/10" />
                                         </div>
                                         <div className="flex-1">
-                                            <h3 className="text-xl font-bold group-hover:text-green-500 transition-colors flex items-center gap-2">
+                                            <h3 className="text-base sm:text-xl font-bold group-hover:text-green-500 transition-colors flex items-center gap-2">
                                                 {ex.name} 
                                                 <Award size={16} className="text-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                                             </h3>
@@ -156,16 +156,16 @@ const Exchanges = () => {
                                         <span className="text-[10px] font-black uppercase tracking-widest text-green-500">Tier {ex.trust_score >= 8 ? 'Alpha' : 'Beta'} Rating</span>
                                     </div>
 
-                                    <div className="col-span-3 text-center md:text-right w-full">
+                                    <div className="col-span-12 sm:col-span-3 text-center sm:text-right w-full">
                                         <div className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-1">Normalized Capacity</div>
-                                        <div className="font-mono text-xl font-bold text-gray-900 dark:text-white flex items-center justify-center md:justify-end gap-2">
+                                        <div className="font-mono text-base sm:text-xl font-bold text-gray-900 dark:text-white flex items-center justify-start sm:justify-end gap-2">
                                             <TrendingUp size={16} className="text-green-500" />
                                             {ex.trade_volume_24h_btc ? ex.trade_volume_24h_btc.toLocaleString(undefined, { maximumFractionDigits: 0 }) : 'N/A'} 
                                             <span className="text-xs text-gray-500">BTC</span>
                                         </div>
                                     </div>
 
-                                    <div className="col-span-1 flex justify-end w-full">
+                                    <div className="hidden sm:flex col-span-1 justify-end w-full">
                                         <a href={ex.url} target="_blank" rel="noreferrer" className="flex items-center justify-center p-4 rounded-2xl bg-gray-100 dark:bg-white/5 hover:bg-green-500 hover:text-white hover:scale-110 active:scale-90 transition-all shadow-md group-hover:shadow-green-500/20">
                                             <ExternalLink size={20} />
                                         </a>
