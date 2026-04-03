@@ -47,8 +47,8 @@ app.use((req, res, next) => {
     next();
 });
 
-// Middleware to ensure DB connection before handling requests
-app.use(async (req, res, next) => {
+// Middleware to ensure DB connection (only for routes that need it)
+const ensureDB = async (req, res, next) => {
     if (mongoose.connection.readyState !== 1) {
         try {
             await connectDB();
@@ -60,13 +60,13 @@ app.use(async (req, res, next) => {
         }
     }
     next();
-});
+};
 
 // Routes
 app.get('/', (req, res) => res.send('CryptoFlux API Ready'));
-app.use('/api/auth', authRoutes);
-app.use('/api/user', userRoutes);
-app.use('/api/crypto', cryptoRoutes);
+app.use('/api/crypto', cryptoRoutes);              // No DB needed
+app.use('/api/auth', ensureDB, authRoutes);        // Needs DB
+app.use('/api/user', ensureDB, userRoutes);        // Needs DB
 
 // Start server if local
 if (require.main === module) {
