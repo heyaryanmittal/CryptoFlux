@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import coingecko from '../utils/coingecko';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
 import { useAuth } from '../context/AuthContext';
 import { Search, Grid, List, TrendingUp, TrendingDown, Star, RefreshCw, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -121,7 +120,6 @@ const Dashboard = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-white pb-20 transition-colors duration-300">
-            <Navbar />
             <div className="container mx-auto px-6 pt-32">
 
                 {/* Welcome & Stats */}

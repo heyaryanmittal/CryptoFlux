@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
-import Navbar from '../components/Navbar';
 
 const Auth = () => {
     const [searchParams] = useSearchParams();
@@ -46,7 +45,6 @@ const Auth = () => {
             <div className="absolute top-[20%] left-[20%] w-[40%] h-[40%] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute bottom-[20%] right-[20%] w-[40%] h-[40%] bg-green-500/10 rounded-full blur-[120px] pointer-events-none" />
 
-            <Navbar />
 
             <div className="flex-1 flex items-center justify-center p-6">
                 <motion.div

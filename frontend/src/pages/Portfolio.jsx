@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import coingecko from '../utils/coingecko';
-import Navbar from '../components/Navbar';
 import { useAuth } from '../context/AuthContext';
 import { Plus, Minus, Trash2, PieChart, Search, ArrowLeft, Loader2, TrendingUp, TrendingDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -127,7 +126,6 @@ const Portfolio = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-white pb-20 transition-colors duration-300">
-            <Navbar />
             <div className="container mx-auto px-6 pt-32">
                 <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
                     <motion.div 

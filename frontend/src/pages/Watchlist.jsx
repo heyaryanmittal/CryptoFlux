@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import coingecko from '../utils/coingecko';
 import { Link, useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
 import { useAuth } from '../context/AuthContext';
 import { TrendingUp, TrendingDown, Star, ArrowLeft, Loader2, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -67,7 +66,6 @@ const Watchlist = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-white pb-20 transition-colors duration-300">
-            <Navbar />
             <div className="container mx-auto px-6 pt-32">
                 <div className="flex items-center gap-4 mb-12">
                     <motion.button 

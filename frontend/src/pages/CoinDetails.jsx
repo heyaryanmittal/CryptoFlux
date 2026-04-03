@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import coingecko from '../utils/coingecko';
-import Navbar from '../components/Navbar';
 import CoinChart from '../components/CoinChart';
 import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, Star, ArrowUpRight, ArrowDownRight, ExternalLink, Activity, Info, TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
@@ -78,14 +77,12 @@ const CoinDetails = () => {
 
     if (loading) return (
         <div className="min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-white">
-            <Navbar />
             <SkeletonLoader />
         </div>
     );
     
     if (!coin) return (
         <div className="min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-white flex flex-col justify-center items-center gap-4 px-6 text-center">
-            <Navbar />
             <Activity size={64} className="text-gray-300 dark:text-gray-700" />
             <h1 className="text-2xl font-bold">Cryptocurrency Not Found</h1>
             <p className="text-gray-500 max-w-sm">The digital asset you're looking for could not be retrieved from the network.</p>
@@ -101,7 +98,6 @@ const CoinDetails = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-white pb-20 transition-colors duration-300">
-            <Navbar />
             <div className="container mx-auto px-6 pt-32">
                 <motion.button 
                     initial={{ opacity: 0, x: -20 }}

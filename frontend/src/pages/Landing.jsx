@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Activity, Shield, TrendingUp, ArrowRight } from 'lucide-react';
-import Navbar from '../components/Navbar';
 
 const Landing = () => {
     return (
@@ -11,8 +10,6 @@ const Landing = () => {
                 <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-green-500/10 rounded-full blur-[150px]" />
                 <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-purple-500/10 rounded-full blur-[150px]" />
             </div>
-
-            <Navbar />
 
             <main className="relative z-10 container mx-auto px-6 pt-32 pb-20 flex flex-col items-center text-center">
                 <motion.div
