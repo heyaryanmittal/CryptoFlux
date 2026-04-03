@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
 import coingecko from '../utils/coingecko';
 import { useAuth } from '../context/AuthContext';
 import { Plus, Minus, Trash2, PieChart, Search, ArrowLeft, Loader2, TrendingUp, TrendingDown } from 'lucide-react';
