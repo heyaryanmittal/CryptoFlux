@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Activity, Shield, TrendingUp, ArrowRight, Zap, BarChart3, Globe, Github, Twitter, Mail } from 'lucide-react';
+import { Activity, Shield, TrendingUp, ArrowRight, BarChart3, Globe, Github, Twitter, Mail } from 'lucide-react';
 
 const Landing = () => {
     return (
@@ -15,18 +15,6 @@ const Landing = () => {
             <main className="relative z-10 flex-1">
                 {/* Hero Section */}
                 <section className="container mx-auto px-6 pt-24 pb-16 flex flex-col items-center text-center">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
-                        className="mt-4"
-                    >
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 text-green-700 dark:text-green-400 text-sm font-medium mb-8">
-                            <Zap size={14} />
-                            <span>Track 10,000+ cryptocurrencies in real-time</span>
-                        </div>
-                    </motion.div>
-
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
