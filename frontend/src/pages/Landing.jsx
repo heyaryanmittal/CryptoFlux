@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Activity, Shield, TrendingUp, ArrowRight, BarChart3, Globe, Github, Twitter, Mail } from 'lucide-react';
+import { Activity, Shield, TrendingUp, ArrowRight, BarChart3, Globe, Star, Github, Twitter, Mail } from 'lucide-react';
 
 const Landing = () => {
     return (
@@ -111,6 +111,12 @@ const Landing = () => {
                             title="Global Exchanges"
                             desc="Compare trading volumes and prices across 200+ exchanges worldwide."
                             delay={0.5}
+                        />
+                        <FeatureCard
+                            icon={<Star className="text-orange-600 dark:text-orange-400" size={28} />}
+                            title="Watchlist Alerts"
+                            desc="Create custom watchlists and get notified when prices hit your targets."
+                            delay={0.6}
                         />
                     </div>
                 </section>
