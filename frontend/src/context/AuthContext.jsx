@@ -100,8 +100,41 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const updatePortfolio = async (coinId, quantity) => {
+        const previousPortfolio = user?.portfolio || [];
+
+        try {
+            // OPTIMISTIC UPDATE
+            const updatedPortfolio = [...previousPortfolio];
+            const index = updatedPortfolio.findIndex(item => item.coinId === coinId);
+
+            if (index > -1) {
+                if (quantity <= 0) {
+                    updatedPortfolio.splice(index, 1);
+                } else {
+                    updatedPortfolio[index] = { ...updatedPortfolio[index], quantity };
+                }
+            } else if (quantity > 0) {
+                updatedPortfolio.push({ coinId, quantity });
+            }
+
+            setUser(prev => ({ ...prev, portfolio: updatedPortfolio }));
+
+            // SYNC WITH BACKEND
+            const res = await axios.post(`${API_URL}/user/portfolio`, { coinId, quantity });
+            
+            setUser(prev => ({ ...prev, portfolio: res.data }));
+            return res.data;
+        } catch (error) {
+            console.error("Failed to update portfolio", error);
+            // ROLLBACK
+            setUser(prev => ({ ...prev, portfolio: previousPortfolio }));
+            throw error;
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, login, signup, logout, loading, updateWatchlist }}>
+        <AuthContext.Provider value={{ user, login, signup, logout, loading, updateWatchlist, updatePortfolio }}>
             {children}
         </AuthContext.Provider>
     );
