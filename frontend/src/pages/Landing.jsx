@@ -57,8 +57,8 @@ const Landing = () => {
                         transition={{ duration: 0.6, delay: 0.5 }}
                         className="flex flex-wrap justify-center gap-8 md:gap-16 mt-16 py-8 border-t border-b border-gray-200 dark:border-white/10 w-full max-w-3xl"
                     >
-                        <StatItem value="10K+" label="Cryptocurrencies" />
-                        <StatItem value="200+" label="Exchanges" />
+                        <StatItem value="150+" label="Cryptocurrencies" />
+                        <StatItem value="50+" label="Exchanges" />
                         <StatItem value="24/7" label="Real-Time Data" />
                         <StatItem value="100%" label="Free to Use" />
                     </motion.div>
@@ -128,13 +128,17 @@ const Landing = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
-                        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-green-500/10 to-purple-500/10 border border-green-500/20 dark:border-green-500/10 p-12 md:p-16 text-center max-w-4xl mx-auto"
+                        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 dark:from-white/[0.06] dark:via-white/[0.03] dark:to-white/[0.06] p-12 md:p-16 text-center max-w-4xl mx-auto border border-gray-800 dark:border-white/10"
                     >
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to start tracking?</h2>
-                        <p className="text-gray-600 dark:text-gray-400 text-lg mb-8 max-w-xl mx-auto">
+                        {/* Glow effects */}
+                        <div className="absolute top-0 left-1/4 w-64 h-64 bg-green-500/20 rounded-full blur-[100px] pointer-events-none" />
+                        <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-purple-500/15 rounded-full blur-[80px] pointer-events-none" />
+
+                        <h2 className="relative text-3xl md:text-4xl font-bold mb-4 text-white dark:text-white">Ready to start tracking?</h2>
+                        <p className="relative text-gray-400 text-lg mb-8 max-w-xl mx-auto">
                             Join thousands of traders who trust CryptoFlux for their daily market analysis.
                         </p>
-                        <Link to="/auth?mode=signup" className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-green-500 to-green-400 text-white dark:text-black font-bold text-lg rounded-full hover:shadow-[0_0_40px_rgba(74,222,128,0.4)] transition-all duration-300 transform hover:-translate-y-0.5">
+                        <Link to="/auth?mode=signup" className="relative group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-green-500 to-green-400 text-black font-bold text-lg rounded-full hover:shadow-[0_0_50px_rgba(74,222,128,0.5)] transition-all duration-300 transform hover:-translate-y-0.5">
                             Create Free Account
                             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                         </Link>
