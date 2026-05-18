@@ -140,7 +140,7 @@ const CoinDetails = () => {
                                         : 'bg-white dark:bg-white/5 text-gray-400 border-gray-200 dark:border-white/10 hover:border-yellow-500/50 hover:text-yellow-500'}`}
                             >
                                 <Star size={24} fill={isStarred ? "currentColor" : "none"} />
-                                <span className={isStarred ? 'block' : 'hidden md:block'}>{isStarred ? 'Tracked' : 'Track Asset'}</span>
+                                <span className={isStarred ? 'block' : 'hidden md:block'}>{isStarred ? 'Remove' : 'Add to Watchlist'}</span>
                             </motion.button>
                         </div>
 

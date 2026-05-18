@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
+import { Eye, EyeOff } from 'lucide-react';
 
 const Auth = () => {
     const [searchParams] = useSearchParams();
@@ -12,6 +13,7 @@ const Auth = () => {
     const [formData, setFormData] = useState({ name: '', email: '', password: '' });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         if (searchParams.get('mode') === 'signup') {
@@ -85,14 +87,28 @@ const Auth = () => {
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Password</label>
-                            <input
-                                type="password"
-                                required
-                                className="w-full bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl p-4 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-600"
-                                value={formData.password}
-                                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                placeholder="••••••••"
-                            />
+                            <div className="relative">
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    required
+                                    className="w-full bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl p-4 pr-12 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-600"
+                                    value={formData.password}
+                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                    placeholder="••••••••"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors focus:outline-none flex items-center justify-center"
+                                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                >
+                                    {showPassword ? (
+                                        <EyeOff className="w-5 h-5" />
+                                    ) : (
+                                        <Eye className="w-5 h-5" />
+                                    )}
+                                </button>
+                            </div>
                         </div>
 
                         <button
@@ -111,6 +127,7 @@ const Auth = () => {
                                 setIsLogin(!isLogin);
                                 setError('');
                                 setFormData({ name: '', email: '', password: '' });
+                                setShowPassword(false);
                                 navigate(isLogin ? '/auth?mode=signup' : '/auth');
                             }}
                             className="text-green-600 dark:text-green-400 hover:text-green-500 dark:hover:text-green-300 font-semibold transition-colors"
