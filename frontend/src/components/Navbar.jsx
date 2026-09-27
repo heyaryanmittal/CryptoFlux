@@ -1,4 +1,4 @@
-import { Link, useNavigate, useLocation } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../hooks/useTheme';
 import { TrendingUp, LogOut, LayoutDashboard, Star, PieChart, Sun, Moon, Coins, ArrowLeftRight, Menu, X } from 'lucide-react';
