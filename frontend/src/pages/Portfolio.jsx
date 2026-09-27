@@ -1,9 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import coingecko from '../utils/coingecko';
 import { useAuth } from '../context/AuthContext';
 import { Plus, Minus, Trash2, PieChart, Search, ArrowLeft, Loader2, TrendingUp, TrendingDown } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+
+import { SkeletonTable } from '../components/Skeletons';
+import { formatCurrency, formatPercentage } from '../utils/formatters';
 
 const Portfolio = () => {
     const { user, updatePortfolio } = useAuth();
@@ -17,6 +20,9 @@ const Portfolio = () => {
     const [coinId, setCoinId] = useState('');
     const [quantity, setQuantity] = useState('');
     const [suggestions, setSuggestions] = useState([]);
+
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [assetToDelete, setAssetToDelete] = useState(null);
 
     const fetchPrices = useCallback(async (portfolio) => {
         if (!portfolio || portfolio.length === 0) {
@@ -36,17 +42,16 @@ const Portfolio = () => {
             setPrices(res.data);
             setLoading(false);
         } catch (err) {
-            console.error(err);
+            console.error('Failed to fetch portfolio prices:', err);
             setLoading(false);
         }
     }, []);
 
     useEffect(() => {
         if (user && user.portfolio) {
-            // Initial load or when portfolio structure changes significantly
             fetchPrices(user.portfolio);
         }
-    }, [user?.portfolio?.length]); // Only refetch when number of items changes to avoid excessive calls
+    }, [user?.portfolio?.length, fetchPrices]);
 
     const handleSearch = async (query) => {
         setCoinId(query);
@@ -54,7 +59,9 @@ const Portfolio = () => {
             try {
                 const res = await coingecko.get(`/search?query=${query}`);
                 setSuggestions(res.data.coins.slice(0, 5));
-            } catch (e) { console.error(e); }
+            } catch (e) {
+                console.error('Search suggestion error:', e);
+            }
         } else {
             setSuggestions([]);
         }
@@ -68,16 +75,12 @@ const Portfolio = () => {
             setCoinId('');
             setQuantity('');
             setIsAdding(false);
-            // The fetchPrices will trigger due to length change if it's a new coin
         } catch (err) {
             console.error("Failed to add asset", err);
         } finally {
             setIsSubmitting(false);
         }
     };
-
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [assetToDelete, setAssetToDelete] = useState(null);
 
     const openDeleteModal = (coinId) => {
         setAssetToDelete(coinId);
@@ -115,14 +118,6 @@ const Portfolio = () => {
         }, 0);
     };
 
-    const TableSkeleton = () => (
-        <div className="space-y-4">
-            {[1, 2, 3, 4].map(idx => (
-                <div key={idx} className="h-20 bg-gray-100 dark:bg-white/5 animate-pulse rounded-2xl w-full"></div>
-            ))}
-        </div>
-    );
-
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-white pb-20 transition-colors duration-300">
             <div className="container mx-auto px-4 sm:px-6 pt-20 sm:pt-32">
@@ -132,7 +127,7 @@ const Portfolio = () => {
                         animate={{ opacity: 1, x: 0 }}
                         className="flex items-center gap-4"
                     >
-                        <button onClick={() => navigate(-1)} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">
+                        <button onClick={() => navigate(-1)} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-white/10 transition-colors" aria-label="Go back">
                             <ArrowLeft size={24} />
                         </button>
                         <h1 className="text-2xl sm:text-4xl font-bold">My Portfolio</h1>
@@ -166,7 +161,7 @@ const Portfolio = () => {
                             animate={{ opacity: 1 }}
                             className="text-3xl sm:text-5xl md:text-6xl font-mono font-bold tracking-tight text-gray-900 dark:text-white break-all sm:break-normal"
                         >
-                            ${getTotalValue().toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                            {formatCurrency(getTotalValue())}
                         </motion.div>
                     </div>
                 </motion.div>
@@ -211,7 +206,7 @@ const Portfolio = () => {
                                                     >
                                                         {suggestions.map(s => (
                                                             <div key={s.id} onClick={() => { setCoinId(s.id); setSuggestions([]); }} className="p-3 hover:bg-gray-100 dark:hover:bg-white/10 cursor-pointer flex items-center gap-3 transition-colors border-b border-gray-100 dark:border-white/5 last:border-0 text-black dark:text-white">
-                                                                <img src={s.thumb} className="w-6 h-6 rounded-full" />
+                                                                <img src={s.thumb} alt={s.name} className="w-6 h-6 rounded-full" />
                                                                 <div className="flex flex-col">
                                                                     <span className="font-medium">{s.name}</span>
                                                                     <span className="text-xs text-gray-500 uppercase">{s.symbol}</span>
@@ -248,6 +243,7 @@ const Portfolio = () => {
                     )}
                 </AnimatePresence>
 
+                {/* Asset Table */}
                 <div className="overflow-x-auto rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5">
                     <table className="w-full text-left border-collapse">
                         <thead>
@@ -263,7 +259,7 @@ const Portfolio = () => {
                             {loading ? (
                                 <tr>
                                     <td colSpan="5" className="px-6 py-10">
-                                        <TableSkeleton />
+                                        <SkeletonTable rows={4} />
                                     </td>
                                 </tr>
                             ) : (
@@ -272,6 +268,7 @@ const Portfolio = () => {
                                         const price = prices[asset.coinId]?.usd || 0;
                                         const change = prices[asset.coinId]?.usd_24h_change || 0;
                                         const value = price * asset.quantity;
+                                        const isPositive = change >= 0;
 
                                         return (
                                             <motion.tr 
@@ -293,11 +290,11 @@ const Portfolio = () => {
                                                 </td>
                                                 <td className="py-5 px-6">
                                                     <div className="font-mono text-gray-900 dark:text-white font-semibold">
-                                                        ${price > 0 ? price.toLocaleString(undefined, { minimumFractionDigits: 2 }) : '---'}
+                                                        {price > 0 ? formatCurrency(price) : '---'}
                                                     </div>
-                                                    <div className={`flex items-center gap-1 text-xs font-semibold ${change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                                                        {change >= 0 ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
-                                                        {Math.abs(change).toFixed(2)}%
+                                                    <div className={`flex items-center gap-1 text-xs font-semibold ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
+                                                        {isPositive ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+                                                        {formatPercentage(change)}
                                                     </div>
                                                 </td>
                                                 <td className="py-5 px-6">
@@ -323,16 +320,16 @@ const Portfolio = () => {
                                                 </td>
                                                 <td className="py-5 px-6">
                                                     <div className="font-mono font-bold text-lg text-gray-900 dark:text-white">
-                                                        ${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                        {formatCurrency(value)}
                                                     </div>
                                                 </td>
                                                 <td className="py-5 px-6 text-right">
-                                                    <button onClick={() => openDeleteModal(asset.coinId)} className="text-gray-400 hover:text-red-500 transition-all p-2 rounded-full hover:bg-red-500/10">
+                                                    <button onClick={() => openDeleteModal(asset.coinId)} className="text-gray-400 hover:text-red-500 transition-all p-2 rounded-full hover:bg-red-500/10" aria-label="Delete asset">
                                                         <Trash2 size={18} />
                                                     </button>
                                                 </td>
                                             </motion.tr>
-                                        )
+                                        );
                                     })}
                                 </AnimatePresence>
                             )}
@@ -403,5 +400,5 @@ const Portfolio = () => {
         </div>
     );
 };
-export default Portfolio;
 
+export default Portfolio;

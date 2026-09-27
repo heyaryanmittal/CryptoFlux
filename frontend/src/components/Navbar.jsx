@@ -1,52 +1,15 @@
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../hooks/useTheme';
 import { TrendingUp, LogOut, LayoutDashboard, Star, PieChart, Sun, Moon, Coins, ArrowLeftRight, Menu, X } from 'lucide-react';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 
 const Navbar = () => {
     const { user, logout } = useAuth();
+    const { darkMode, toggleTheme } = useTheme();
     const navigate = useNavigate();
     const location = useLocation();
     const [mobileOpen, setMobileOpen] = useState(false);
-    const [darkMode, setDarkMode] = useState(() => {
-        if (typeof window !== 'undefined') {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                return savedTheme === 'dark';
-            }
-            return window.matchMedia('(prefers-color-scheme: dark)').matches;
-        }
-        return true;
-    });
-
-    const applyTheme = useCallback((isDark) => {
-        const root = document.documentElement;
-        if (isDark) {
-            root.classList.add('dark');
-            root.classList.remove('light');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            root.classList.remove('dark');
-            root.classList.add('light');
-            localStorage.setItem('theme', 'light');
-        }
-    }, []);
-
-    useEffect(() => {
-        applyTheme(darkMode);
-    }, [darkMode, applyTheme]);
-
-    useEffect(() => {
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        const handleChange = (e) => {
-            const savedTheme = localStorage.getItem('theme');
-            if (!savedTheme) {
-                setDarkMode(e.matches);
-            }
-        };
-        mediaQuery.addEventListener('change', handleChange);
-        return () => mediaQuery.removeEventListener('change', handleChange);
-    }, []);
 
     // Close mobile menu on route change
     useEffect(() => {
@@ -62,10 +25,6 @@ const Navbar = () => {
         }
         return () => { document.body.style.overflow = ''; };
     }, [mobileOpen]);
-
-    const toggleTheme = () => {
-        setDarkMode(prev => !prev);
-    };
 
     const handleLogout = () => {
         setMobileOpen(false);
@@ -90,7 +49,7 @@ const Navbar = () => {
                 </Link>
 
                 <div className="flex items-center gap-2 sm:gap-5">
-                    {/* Theme Toggle — always visible */}
+                    {/* Theme Toggle */}
                     <button
                         onClick={toggleTheme}
                         className="relative p-2 rounded-full text-gray-600 dark:text-yellow-400 hover:bg-gray-100 dark:hover:bg-white/10 transition-all duration-200 active:scale-90"
@@ -124,7 +83,7 @@ const Navbar = () => {
                                             {user.name.charAt(0).toUpperCase()}
                                         </div>
                                     </Link>
-                                    <button onClick={handleLogout} className="text-gray-500 dark:text-white/60 hover:text-red-600 dark:hover:text-red-400 transition transform hover:rotate-90 duration-300">
+                                    <button onClick={handleLogout} className="text-gray-500 dark:text-white/60 hover:text-red-600 dark:hover:text-red-400 transition transform hover:rotate-90 duration-300" aria-label="Log out">
                                         <LogOut size={18} />
                                     </button>
                                 </div>
@@ -146,7 +105,7 @@ const Navbar = () => {
                                 <Link to="/auth" className="px-5 py-2 rounded-full border border-gray-300 dark:border-white/20 hover:bg-gray-100 dark:hover:bg-white/10 transition-all duration-200 text-sm font-medium">Log In</Link>
                                 <Link to="/auth?mode=signup" className="px-5 py-2 rounded-full bg-gradient-to-r from-green-500 to-green-400 text-white dark:text-black font-bold text-sm hover:shadow-[0_0_20px_rgba(74,222,128,0.4)] transition-all duration-300">Get Started</Link>
                             </div>
-                            {/* Mobile auth — compact */}
+                            {/* Mobile auth */}
                             <div className="flex sm:hidden gap-2">
                                 <Link to="/auth" className="px-3 py-1.5 rounded-full border border-gray-300 dark:border-white/20 text-xs font-medium">Log In</Link>
                                 <Link to="/auth?mode=signup" className="px-3 py-1.5 rounded-full bg-gradient-to-r from-green-500 to-green-400 text-white dark:text-black font-bold text-xs">Sign Up</Link>
@@ -196,4 +155,5 @@ const Navbar = () => {
         </>
     );
 };
+
 export default Navbar;

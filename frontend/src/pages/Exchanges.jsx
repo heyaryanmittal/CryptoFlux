@@ -1,7 +1,15 @@
 import { useState, useEffect } from 'react';
 import coingecko from '../utils/coingecko';
-import { ArrowLeftRight, ExternalLink, Globe, Award, TrendingUp, AlertTriangle, RefreshCcw } from 'lucide-react';
+import { ArrowLeftRight, ExternalLink, Globe, Award, TrendingUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+
+import { SkeletonRow } from '../components/Skeletons';
+import { ErrorMessage } from '../components/StateMessage';
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { opacity: 1, y: 0 }
+};
 
 const Exchanges = () => {
     const [exchanges, setExchanges] = useState([]);
@@ -31,24 +39,6 @@ const Exchanges = () => {
         fetchExchanges();
     }, []);
 
-    const SkeletonRow = () => (
-        <div className="glass p-6 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 animate-pulse flex items-center gap-6 mb-4">
-            <div className="w-8 h-8 rounded-lg bg-gray-200 dark:bg-white/10" />
-            <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-white/10" />
-            <div className="flex-1 space-y-2">
-                <div className="h-4 bg-gray-200 dark:bg-white/10 rounded w-1/4" />
-                <div className="h-3 bg-gray-200 dark:bg-white/10 rounded w-1/3" />
-            </div>
-            <div className="h-4 bg-gray-200 dark:bg-white/10 rounded w-24 hidden md:block" />
-            <div className="h-10 w-10 bg-gray-200 dark:bg-white/10 rounded-full" />
-        </div>
-    );
-
-    const itemVariants = {
-        hidden: { opacity: 0, y: 15 },
-        visible: { opacity: 1, y: 0 }
-    };
-
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-white pb-20 transition-colors duration-300">
             <div className="container mx-auto px-4 sm:px-6 pt-20 sm:pt-32">
@@ -66,7 +56,6 @@ const Exchanges = () => {
                             <p className="text-gray-500 dark:text-gray-400 font-medium tracking-wide">Market leaders by liquidity and user trust</p>
                         </div>
                     </div>
-                    {/* Market Cap Info pill if any? nah keep it simple */}
                 </motion.div>
 
                 <AnimatePresence mode="wait">
@@ -77,32 +66,18 @@ const Exchanges = () => {
                             </div>
                         </motion.div>
                     ) : error ? (
-                        <motion.div 
+                        <ErrorMessage
                             key="error"
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="max-w-xl mx-auto text-center py-24 bg-red-50 dark:bg-red-500/5 rounded-[3rem] border border-red-200 dark:border-red-500/20 shadow-2xl shadow-red-500/5"
-                        >
-                            <div className="w-20 h-20 bg-red-500/10 rounded-full flex items-center justify-center text-red-500 mx-auto mb-8">
-                                <AlertTriangle size={40} />
-                            </div>
-                            <h2 className="text-3xl font-bold mb-4">Connection Failed</h2>
-                            <p className="text-gray-600 dark:text-gray-400 mb-10 px-10 leading-relaxed">{error}</p>
-                            <button
-                                onClick={fetchExchanges}
-                                className="px-10 py-4 bg-red-500 text-white font-extrabold rounded-2xl hover:bg-red-600 transition-all active:scale-95 shadow-lg shadow-red-500/20 inline-flex items-center gap-2"
-                            >
-                                <RefreshCcw size={20} /> Attempt Link Recovery
-                            </button>
-                        </motion.div>
+                            title="Connection Failed"
+                            message={error}
+                            onRetry={fetchExchanges}
+                        />
                     ) : (
                         <motion.div 
                             key="content"
                             initial="hidden"
                             animate="visible"
-                            variants={{
-                                visible: { transition: { staggerChildren: 0.03 } }
-                            }}
+                            variants={{ visible: { transition: { staggerChildren: 0.03 } } }}
                             className="grid gap-4"
                         >
                             <div className="grid grid-cols-12 px-8 py-4 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 border-b border-gray-200 dark:border-white/5 mb-2">
@@ -179,4 +154,5 @@ const Exchanges = () => {
         </div>
     );
 };
+
 export default Exchanges;
